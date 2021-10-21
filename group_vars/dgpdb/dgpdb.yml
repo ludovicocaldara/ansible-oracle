@@ -1,0 +1,23 @@
+---
+  hostgroup: dgpdb
+
+  install_from_nfs: false
+  oracle_sw_copy: true
+  #oracle_sw_unpack: False
+  autostartup_service: true
+  # oracle_sw_source_local: /Users/miksan/Downloads/oracle/
+  oracle_sw_source_www: lookup('env', 'oracle_sw_source_www')
+
+  is_sw_source_local: false
+
+  configure_ntp: true
+  configure_motd: true
+  configure_host_disks: true
+
+  install_os_packages: False
+  configure_epel_repo: false
+  configure_public_yum_repo: false
+  disable_selinux: false
+
+  disable_EE_options: False
+

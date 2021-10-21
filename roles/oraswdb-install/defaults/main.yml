@@ -33,45 +33,15 @@
                            {%- else -%}
                                {{ oracle_stage }}/{{ item[0].version }}
                            {%- endif -%}"
-  # oracle_home_db: "{% if dbh is defined %}
-  #                    {%- if dbh.oracle_home is defined %}{{ dbh.oracle_home }}
-  #                    {%- else %}{{ oracle_base}}/{{ dbh.oracle_version_db }}/{{ dbh.home }}
-  #                    {%- endif %}
-  #                  {%- elif item.0 is defined %}
-  #                    {%- if item.0.oracle_home is defined %}{{ item.0.oracle_home}}
-  #                    {%- else %}{{ oracle_base }}/{{ item.0.oracle_version_db }}/{{ item.0.home }}
-  #                    {%- endif %}
-  #                  {%- elif item is defined %}
-  #                    {%- if item.oracle_home is defined %}{{ item.oracle_home}}
-  #                    {%- else %}{{ oracle_base }}/{{ item.oracle_version_db }}/{{ item.home }}
-  #                    {%- endif %}
-  #                  {%- endif %}"
 
 
   oracle_profile_name: ".profile_{{dbh.home}}"
 
-  # "{%- if item is defined -%}
-  #                          {%- if item.oracle_home is defined -%}
-  #                             .profile_{{ item.oracle_home |basename}}_{{ item.oracle_version_db}}
-  #                          {%- elif item.home is defined -%}
-  #                             .profile_{{ item.home }}_{{item.oracle_version_db}}
-  #                          {%- elif item.oracle_home is defined -%}
-  #                             .profile_{{item.oracle_home |basename}}_{{item.oracle_version_db}}
-  #                          {%- endif- %}
-  #                       {% else %}
-  #                          {%- if dbh.oracle_home is defined -%}
-  #                             .profile_{{ dbh.oracle_home |basename}}_{{ dbh.oracle_version_db}}
-  #                          {%- elif dbh.home is defined -%}
-  #                             .profile_{{ dbh.home }}_{{dbh.oracle_version_db}}
-  #                          {%- else -%}
-  #                             .profile_{{dbh.home}}_{{dbh.oracle_db_name}}
-  #                          {%- endif -%}
-  #                       {%- endif -%}"    # Name of profile-file. Sets up the environment for that ORACLE_HOME
   oracle_hostname: "{{ ansible_fqdn }}"                            # Full (FQDN) name of the host
   www_download_bin: curl                              # curl (shell module) or get_url module
-  oracle_sw_source_www: ""                            #http://www/orasw     # address to all software if using the get_url module when putting software on the host(s)
-  oracle_sw_source_local: /tmp  # Path to all software if using the copy module when putting software on the host(s)
-  is_sw_source_local: true
+  oracle_sw_source_www: 
+  is_sw_source_local: false
+  oracle_sw_source_local: 
   configure_cluster: false
   autostartup_service: false # automatic startup/stop databases service
   hostinitdaemon: "{% if    ansible_os_family == 'RedHat' and ansible_distribution_major_version | int >= 7   %}systemd
@@ -86,6 +56,7 @@
   oracle_EE_options: "{%- if   db_homes_config[dbh.home]['version'] in ('18.3.0.0') %}{{ oracle_EE_options_183 }}
                       {%- elif db_homes_config[dbh.home]['version'] in ('19.3.0.0') %}{{ oracle_EE_options_193 }}
                       {%- elif db_homes_config[dbh.home]['version'] in ('21.3.0.0') %}{{ oracle_EE_options_213 }}
+                      {%- elif db_homes_config[dbh.home]['version'] in ('21.0.0.0') %}{{ oracle_EE_options_210 }}
                       {%- elif db_homes_config[dbh.home]['version'] in ('12.2.0.1') %}{{ oracle_EE_options_122 }}
                       {%- elif db_homes_config[dbh.home]['version'] in ('12.1.0.1', '12.1.0.2') %}{{oracle_EE_options_121}}
                       {%- elif db_homes_config[dbh.home]['version'] == '11.2.0.4' %}{{oracle_EE_options_112}}
@@ -119,6 +90,12 @@
     - {option: rat          , state: false }
 
   oracle_EE_options_193:
+    - {option: oaa          , state: false }
+    - {option: olap         , state: false }
+    - {option: partitioning , state: false }
+    - {option: rat          , state: false }
+
+  oracle_EE_options_210:
     - {option: oaa          , state: false }
     - {option: olap         , state: false }
     - {option: partitioning , state: false }
@@ -158,6 +135,7 @@
         - "set time on"
 
   oracle_sw_image_db:
+       - { filename: db21000-211005.zip, version: 21.0.0.0, creates: 'install/.img.bin' }
        - { filename: LINUX.X64_213000_db_home.zip, version: 21.3.0.0, creates: 'install/.img.bin' }
        - { filename: LINUX.X64_193000_db_home.zip, version: 19.3.0.0, creates: 'install/.img.bin' }
        - { filename: LINUX.X64_180000_db_home.zip, version: 18.3.0.0, creates: 'install/.img.bin' }

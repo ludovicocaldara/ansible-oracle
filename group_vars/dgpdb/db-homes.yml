@@ -1,0 +1,11 @@
+apply_patches_db: False
+db_homes_config:
+  21000-211005:
+    home: db21000_211005
+    version: 21.0.0.0
+    edition: EE
+
+db_homes_installed:
+     - home: 21000-211005
+       apply_patches: False
+       state: present

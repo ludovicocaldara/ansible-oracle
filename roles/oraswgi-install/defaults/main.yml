@@ -2,7 +2,7 @@
 
   #master_node: true
   cluster_master: "{{play_hosts[0]}}"
-  role_separation: false
+  role_separation: False
   hostgroup: "{{ group_names[0] }}"
   hostgroup_hub: "{{ hostgroup }}-hub"
   hostgroup_leaf: "{{ hostgroup }}-leaf"
@@ -22,11 +22,11 @@
   www_download_bin: curl                              # curl (shell module) or get_url module
   oracle_sw_source_www: http://www/orasw     # address to all software if using the get_url module when putting software on the host(s)
   oracle_sw_source_local: /tmp  # Path to all software if using the copy module when putting software on the host(s)
-  is_sw_source_local: true
+  #is_sw_source_local: true
   oracle_sw_copy: "{% if install_from_nfs %}False{% else %}True{% endif %}"
   oracle_sw_unpack: "{% if install_from_nfs %}False{% else %}True{% endif %}"
 
-  install_from_nfs: false
+  install_from_nfs: False
   nfs_server_sw: nfsserver
   nfs_server_sw_path: /path/to/orasw
 
@@ -91,7 +91,7 @@
 
   oracle_asm_storage_option: "{% if oracle_install_version_gi is version('12.2', '>=') %}FLEX_ASM_STORAGE{% else %}LOCAL_ASM_STORAGE{% endif %}"
 
-  configure_cluster: false
+  configure_cluster: False
   oracle_gi_gns_subdomain: a.b.c
   oracle_gi_gns_vip: gnsvip.a.b.c
 

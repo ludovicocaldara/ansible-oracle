@@ -33,7 +33,23 @@
       - directoriesdb
 
   - include_tasks: "{{ www_download_bin }}.yml"
-    when: not is_sw_source_local and oracle_sw_copy
+    #when: not is_sw_source_local and oracle_sw_copy
+
+  - name: check oracle_sq_copy
+    ansible.builtin.debug:
+      msg: "oracle_sw_copy"
+    when: oracle_sw_copy|bool
+
+  - name: check is_sw_source_local
+    ansible.builtin.debug:
+      msg: "is_sw_source_local"
+    when: is_sw_source_local|bool
+
+
+  - name: check is_sw_source_local and oracle_sw_copy
+    ansible.builtin.debug:
+      msg: "is_sw_source_local and oracle_sw_copy"
+    when: is_sw_source_local|bool and oracle_sw_copy|bool
 
   - name: install-home-db | Transfer oracle installfiles to server (local)
     copy: 
@@ -47,7 +63,7 @@
     become: yes
     become_user: "{{ oracle_user }}"
     run_once: "{{ configure_cluster}}"
-    when: item[0].version == db_homes_config[item[1].home]['version'] and item[1].state|lower == 'present'  and is_sw_source_local and oracle_sw_copy
+    when: item[0].version == db_homes_config[item[1].home]['version'] and item[1].state|lower == 'present'  and is_sw_source_local|bool and oracle_sw_copy|bool
     tags:
       - oradbsw
 

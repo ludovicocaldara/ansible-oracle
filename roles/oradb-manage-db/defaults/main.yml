@@ -141,20 +141,20 @@
 
 
 # This is an example layout of a database installation
-  oracle_databases:                                            # Dictionary describing the databases to be installed
-        - home: 18300-base                                            # 'Last' directory in ORACLE_HOME path (e.g /u01/app/oracle/12.1.0.2/racdb)                          # The edition of database-server (EE,SE,SEONE)
-          oracle_db_name: orcl                                 # Database name
-          oracle_db_type: SI                                   # Type of database (RAC,RACONENODE,SI)
-          is_container: False                                  # (true/false) Is the database a container database
-          pdb_prefix: pdb
-          num_pdbs: 1
-          storage_type: FS                                     # Database storage to be used. ASM or FS.
-          oracle_db_mem_totalmb: 1024                          # Amount of RAM to be used for SGA + PGA
-          oracle_database_type: MULTIPURPOSE                   # MULTIPURPOSE|DATA_WAREHOUSING|OLTP
-          redolog_size: 100M
-          redolog_groups: 3
-          archivelog: False
-          flashback: False
-          force_logging: False
-          listener_name: LISTENER
-          state: present                                        # present | absent
+#  oracle_databases:                                            # Dictionary describing the databases to be installed
+#        - home: 18300-base                                            # 'Last' directory in ORACLE_HOME path (e.g /u01/app/oracle/12.1.0.2/racdb)                          # The edition of database-server (EE,SE,SEONE)
+#          oracle_db_name: orcl                                 # Database name
+#          oracle_db_type: SI                                   # Type of database (RAC,RACONENODE,SI)
+#          is_container: False                                  # (true/false) Is the database a container database
+#          pdb_prefix: pdb
+#          num_pdbs: 1
+#          storage_type: FS                                     # Database storage to be used. ASM or FS.
+#          oracle_db_mem_totalmb: 1024                          # Amount of RAM to be used for SGA + PGA
+#          oracle_database_type: MULTIPURPOSE                   # MULTIPURPOSE|DATA_WAREHOUSING|OLTP
+#          redolog_size: 100M
+#          redolog_groups: 3
+#          archivelog: False
+#          flashback: False
+#          force_logging: False
+#          listener_name: LISTENER
+#          state: present                                        # present | absent
